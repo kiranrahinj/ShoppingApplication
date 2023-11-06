@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>AdminPanel</title>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+	<link href="/style.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<style>
+		.card:hover{
+			background-color: lightgray;
+			cursor: pointer;
+		}
+	</style>	
+</head>
+
+<body th:if="${admin}">
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container">
+			<a class="navbar-brand" th:href="@{/home}">MyCart</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" th:href="@{/home}">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Categories
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="#">Action</a>
+							<a class="dropdown-item" href="#">Another action</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<ul class="navbar-nav ml-auto ">
+                <li>
+                    <a class="nav-link text-light" th:text="${adminName}"></a>
+                </li>
+                <li>
+                    <a class="nav-link  text-light" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+		</div>
+	</nav>
+	
+	<div th:if="${cat}" class="alert alert-warning alert-dismissible fade show" role="alert">
+		<strong>Holy guacamole!</strong> You should check in on some of those fields below.
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<div class="container">
+
+		<div class="row" style="margin-top: 150px; width: 1000px;;">
+			<div class="col-md-4 ">
+				<div>
+					<div class="card " style="width: 18rem;">
+						<div class="card mt-2" style="height: 150px;width:150px;border-radius: 200px; margin: auto;">
+							<img class="card-img-top" src="img/team.png" alt="Card image cap"
+								style="height: 100%;width:100%;border-radius: 200px;" />
+						</div>
+						<div class="card-body">
+							<h5 class="card-title text-center">100</h5>
+							<h5 class="card-title text-center">USERS</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 ">
+				<div>
+					<div class="card " style="width: 18rem;">
+						<div class="card mt-2" style="height: 150px;width:150px;border-radius: 200px; margin: auto;">
+							<img class="card-img-top" src="img/options.png" alt="Card image cap"
+								style="height: 100%;width:100%;border-radius: 200px;" />
+						</div>
+						<div class="card-body">
+							<h5 class="card-title text-center">10</h5>
+							<h5 class="card-title text-center">CATEGORY</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 ">
+				<div>
+					<div class="card " style="width: 18rem;">
+						<div class="card mt-2" style="height: 150px;width:150px;border-radius: 200px; margin: auto;">
+							<img class="card-img-top" src="img/delivery-box.png" alt="Card image cap"
+								style="height: 100%;width:100%;border-radius: 200px;" />
+						</div>
+						<div class="card-body">
+							<h5 class="card-title text-center">10</h5>
+							<h5 class="card-title text-center">PRODUCTS</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<div class="row mt-5 mx-auto ">
+				<div class="col-md-6" data-toggle="modal" data-target="#categoryModal">
+					<div>
+						<div class="card" style="width: 18rem;">
+							<div class="card mt-2"
+								style="height: 150px;width:150px;border-radius: 200px; margin: auto;">
+								<img class="card-img-top" src="img/application.png" alt="Card image cap"
+									style="height: 100%;width:100%;border-radius: 200px;" />
+							</div>
+							<div class="card-body">
+								<a>
+									<h5 class="card-title text-center">ADD CATEGORY</h5>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 ml-auto " data-toggle="modal" data-target="#productModal">
+					<div>
+						<div class="card " style="width: 18rem;">
+							<div class="card mt-2"
+								style="height: 150px;width:150px;border-radius: 200px; margin: auto;">
+								<img class="card-img-top" src="img/plus.png" alt="Card image cap"
+									style="height: 100%;width:100%;border-radius: 200px;" />
+							</div>
+							<div class="card-body">
+								<a>
+									<h5 class="card-title text-center">ADD PRODUCTS</h5>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" style="width: 700px;">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title text-light" id="exampleModalLabel">Add Categories</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<form th:action="@{/saveCategory}" method="post">
+							<div class="form-group">
+								<label for="exampleFormControlInput1">Category Name</label>
+								<input type="text" class="form-control" id="exampleFormControlInput1"
+									placeholder="Enter Category Name" name="categoryTitle">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleFormControlTextarea1">Category Description</label>
+								<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+									style="height: 200px;" placeholder="Enter Category Description"
+									name="categoryDescription"></textarea>
+							</div>
+
+							<div class="modal-body d-flex justify-content-center ">
+								<button type="submit" class="btn btn-primary mx-2">Add Category</button>
+								<button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">Close</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" style="width: 700px;">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title text-light" id="exampleModalLabel">Add Product</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<form th:action="@{/saveProduct}" method="post" enctype="multipart/form-data">
+							<div class="form-group  mb-4">
+								<label for="exampleInputEmail1">Product Name</label>
+								<input type="text" class="form-control" id="exampleInputEmail1"
+									aria-describedby="emailHelp" name="pName" placeholder="Enter Name">
+
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Product Description</label>
+								<input type="text" class="form-control" id="exampleInputPassword1"
+									placeholder="Enter Description" name="pDesc">
+							</div>
+							
+							<div class="form-group">
+								<label for="exampleInputPassword1">Product Price</label>
+								<input type="number" class="form-control" id="exampleInputPassword1"
+									placeholder="Enter Price" name="pPrice">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputPassword1">Product Discount</label>
+								<input type="number" class="form-control" id="exampleInputPassword1"
+									placeholder="Enter Discount" name="pDiscount">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputPassword1">Product Quantity</label>
+								<input type="number" class="form-control" id="exampleInputPassword1"
+									placeholder="Enter Quantity" name="pQuantity">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Product Pic</label>
+								<input type="file" class="form-control" id="exampleInputPassword1"
+									placeholder="Enter Pic" name="pPhoto">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Select Category</label>
+								
+								<select class=" form-group custom-select custom-select-md mb-2" name="cid">
+									<option th:each="cat:${catList}" th:value="${cat.getCategoryId()}" th:text="${cat.getCategoryTitle()}"></option>
+								</select>
+							</div>
+							<div class="modal-body d-flex justify-content-center ">
+								<button type="submit" class="btn btn-primary mx-2">Add Product</button>
+								<button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">Close</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+
+</html>
